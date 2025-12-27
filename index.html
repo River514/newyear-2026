@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>给蓓蓓的跨年</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- 🎬 视频背景 -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="assets/videos/background.mp4" type="video/mp4">
+            您的浏览器不支持视频播放
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>亲爱的<em>蓓蓓</em></h1>
+            <p>一起迎接崭新的2026年</p>
+        </header>
+
+        <!-- 倒计时 -->
+        <section id="countdown">
+            <h2>距离2026年1月1日还有</h2>
+            <div class="clock">
+                <div class="slot"><span id="d" class="num">00</span><span class="label">天</span></div>
+                <div class="slot"><span id="h" class="num">00</span><span class="label">时</span></div>
+                <div class="slot"><span id="m" class="num">00</span><span class="label">分</span></div>
+                <div class="slot"><span id="s" class="num">00</span><span class="label">秒</span></div>
+            </div>
+            <div id="newyear-msg" class="hidden">新年快乐，蓓蓓！</div>
+        </section>
+
+        <!-- 相册 -->
+        <section id="gallery">
+            <h3>我的公主殿下</h3>
+            <div class="photo-slider">
+                <div class="photo-slide active">
+                    <img src="assets/photos/photo1.jpg" alt="我们的照片1" />
+                </div>
+                <div class="photo-slide">
+                    <img src="assets/photos/photo2.jpg" alt="我们的照片2" />
+                </div>
+                <div class="photo-slide">
+                    <img src="assets/photos/photo3.jpg" alt="我们的照片3" />
+                </div>
+                <div class="photo-slide">
+                    <img src="assets/photos/photo4.jpg" alt="我们的照片4" />
+                </div>
+                <div class="photo-slide">
+                    <img src="assets/photos/photo5.jpg" alt="我们的照片5" />
+                </div>
+                <div class="photo-slide">
+                    <img src="assets/photos/photo6.jpg" alt="我们的照片6" />
+                </div>
+                <div class="photo-slide">
+                    <img src="assets/photos/photo7.jpg" alt="我们的照片7" />
+                </div>
+                <div class="photo-slide">
+                    <img src="assets/photos/photo8.jpg" alt="我们的照片8" />
+                </div>
+
+                <div class="slider-dots"></div>
+            </div>
+        </section>
+
+        <!-- 底部文字 -->
+        <section style="margin-top:80px; text-align:center; color:#fff;">
+            <p>如果时间可以一直这样走下去，</p>
+            <p>我希望每一年跨年，</p>
+            <p>身边的人，都是你。</p>
+        </section>
+
+        <!-- ✅ 两个按钮（零点后显示） -->
+        <div id="action-buttons" class="hidden" style="text-align:center; margin-top:40px;">
+            <button class="special-btn" id="view-letter-btn">💌 查看情书</button>
+            <button class="special-btn" id="view-wishes-btn">🎉 新年祝福</button>
+        </div>
+    </div>
+
+    <!-- 音乐按钮 -->
+    <button id="music-toggle" class="icon-btn muted" aria-label="开启音乐" title="开启音乐" type="button">🔇</button>
+    <audio id="bg-music" preload="auto" loop muted src="Stay With Me.mp3"></audio>
+
+    
+    <!-- 情书 -->
+    <div id="love-letter" class="hidden">
+        <div class="letter-content">
+            <h2 class="letter-title">蓓蓓</h2>
+
+            <p class="letter-paragraph">以前觉得，新年只是日历上数字的跳动，</p>
+            <p class="letter-paragraph">直到遇见你，这个词才有了具体的画面。</p>
+
+            <p class="letter-paragraph letter-gap">这一年，世界发生了很多事，</p>
+            <p class="letter-paragraph">但在我心里，最重要的事只有一件：</p>
+            <p class="letter-paragraph">那就是你的出现。</p>
+
+            <p class="letter-paragraph letter-gap">谢谢你，成为我平凡生活里的那个"奇迹"。</p>
+            <p class="letter-paragraph">谢谢你，让我原本孤单的冬天变得如此温暖。</p>
+
+            <p class="letter-paragraph letter-gap">这是我们一起迎来的第一个新年，</p>
+            <p class="letter-paragraph">但我更想说，这只是无数个幸福开端的序章。</p>
+
+            <p class="letter-paragraph letter-gap">未来的每一个春夏秋冬，</p>
+            <p class="letter-paragraph">每一个日出日落，</p>
+            <p class="letter-paragraph">我都想牵着你的手，慢慢走过。</p>
+
+            <p class="letter-ending">新年快乐，我的公主。</p>
+        </div>
+
+        <button id="back-from-letter" class="back-btn">← 返回</button>
+    </div>
+
+
+    <!-- ✅ 新年祝福页面 -->
+    <div id="new-year-wishes" class="hidden">
+        <div class="wishes-content">
+            <h2>🎊 2026 新年祝福 🎊</h2>
+            <p>愿新的一年里</p>
+            <p>日子清透，世事温柔</p>
+            <p>你依旧保持热爱，奔赴山海</p>
+            <p>把烦恼留给昨天</p>
+            <p>把温暖留给身边 把手交给我</p>
+            <p>我会一直站在你身后</p>
+            <p>守护你的笑容，直到永久</p>
+            <p>一起去更远的未来 💕</p>
+        </div>
+
+        <button id="back-from-wishes" class="back-btn">← 返回</button>
+    </div>
+
+    <canvas id="fireworks" class="hidden"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
