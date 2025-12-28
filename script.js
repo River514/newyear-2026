@@ -32,45 +32,59 @@ window.addEventListener("DOMContentLoaded", () => {
     const backFromLetterBtn = document.getElementById("back-from-letter");
     const backFromWishesBtn = document.getElementById("back-from-wishes");
 
-    // ================= 音乐逻辑（简化版） =================
+   // ================= 音乐逻辑 =================
 const musicEl = document.getElementById("bg-music");
 const musicToggle = document.getElementById("music-toggle");
 
-if (musicToggle && musicEl) {
-    // 初始状态：静音
-    musicEl.muted = true;
+updateMusicIcon();
+
+const startMusic = () => {
+    if (!musicEl.paused) return;
+
+    musicEl.muted = false;
     musicEl.volume = 0.8;
-    
-    // 点击按钮控制音乐
+    musicEl.play().then(() => {
+        updateMusicIcon();
+        document.removeEventListener('click', startMusic);
+        document.removeEventListener('touchstart', startMusic);
+    }).catch(error => {
+        console.log("浏览器拦截自动播放，等待用户交互...");
+    });
+};
+
+startMusic();
+
+document.addEventListener('click', startMusic);
+document.addEventListener('touchstart', startMusic);
+
+if (musicToggle && musicEl) {
     musicToggle.addEventListener("click", (e) => {
         e.stopPropagation();
-        
+
         if (musicEl.paused) {
-            // 播放音乐
-            musicEl.muted = false;
-            musicEl.play().then(() => {
-                console.log("✅ 音乐开始播放");
-                musicToggle.textContent = "🎵";
-                musicToggle.classList.remove("muted");
-            }).catch(error => {
-                console.log("❌ 音乐播放失败:", error);
-                alert("音乐播放失败，请重试");
-            });
+            startMusic();
         } else {
-            // 暂停音乐
             musicEl.pause();
-            musicToggle.textContent = "🔇";
-            musicToggle.classList.add("muted");
-            console.log("⏸️ 音乐已暂停");
+            updateMusicIcon();
         }
     });
-    
-    // 初始化图标
-    musicToggle.textContent = "🔇";
-    musicToggle.classList.add("muted");
+}
+
+function updateMusicIcon() {
+    if (!musicToggle || !musicEl) return;
+    if (!musicEl.paused) {
+        musicToggle.textContent = "🎵";
+        musicToggle.classList.remove("muted");
+        musicToggle.setAttribute("aria-label", "关闭音乐");
+        musicToggle.setAttribute("title", "关闭音乐");
+    } else {
+        musicToggle.textContent = "🔇";
+        musicToggle.classList.add("muted");
+        musicToggle.setAttribute("aria-label", "开启音乐");
+        musicToggle.setAttribute("title", "开启音乐");
+    }
 }
 // ================= 音乐逻辑结束 =================
-
     
     // ================= 页面切换逻辑 ================= 
     // 查看情书按钮
@@ -289,6 +303,7 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
+
 
 
 
