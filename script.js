@@ -32,71 +32,44 @@ window.addEventListener("DOMContentLoaded", () => {
     const backFromLetterBtn = document.getElementById("back-from-letter");
     const backFromWishesBtn = document.getElementById("back-from-wishes");
 
-    // ================= 音乐逻辑（移动端优化版） =================
-    const musicEl = document.getElementById("bg-music");
-    const musicToggle = document.getElementById("music-toggle");
-    let musicStarted = false; // 标记音乐是否已尝试启动
+    // ================= 音乐逻辑（简化版） =================
+const musicEl = document.getElementById("bg-music");
+const musicToggle = document.getElementById("music-toggle");
 
-    updateMusicIcon();
-
-    const startMusic = () => {
-        if (!musicEl.paused || musicStarted) return;
-
-        musicStarted = true;
-        musicEl.muted = false;
-        musicEl.volume = 0.8;
-
-        musicEl.play().then(() => {
-            console.log("✅ 音乐播放成功");
-            updateMusicIcon();
-        }).catch(error => {
-            console.log("❌ 音乐播放被阻止:", error);
-            musicStarted = false; // 重置标记，允许再次尝试
-        });
-    };
-
-    // ✅ 添加明显的用户提示
-    if (musicToggle && musicEl) {
-        // 点击音乐按钮启动
-        musicToggle.addEventListener("click", (e) => {
-            e.stopPropagation();
-
-            if (musicEl.paused) {
-                startMusic();
-            } else {
-                musicEl.pause();
-                updateMusicIcon();
-            }
-        });
-
-        // 页面任意位置点击也尝试启动（仅一次）
-        const startOnFirstInteraction = () => {
-            if (!musicStarted) {
-                startMusic();
-            }
-            document.removeEventListener('click', startOnFirstInteraction);
-            document.removeEventListener('touchstart', startOnFirstInteraction);
-        };
-
-        document.addEventListener('click', startOnFirstInteraction, { once: true });
-        document.addEventListener('touchstart', startOnFirstInteraction, { once: true });
-    }
-
-    function updateMusicIcon() {
-        if (!musicToggle || !musicEl) return;
-        if (!musicEl.paused) {
-            musicToggle.textContent = "🎵";
-            musicToggle.classList.remove("muted");
-            musicToggle.setAttribute("aria-label", "关闭音乐");
-            musicToggle.setAttribute("title", "关闭音乐");
+if (musicToggle && musicEl) {
+    // 初始状态：静音
+    musicEl.muted = true;
+    musicEl.volume = 0.8;
+    
+    // 点击按钮控制音乐
+    musicToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        
+        if (musicEl.paused) {
+            // 播放音乐
+            musicEl.muted = false;
+            musicEl.play().then(() => {
+                console.log("✅ 音乐开始播放");
+                musicToggle.textContent = "🎵";
+                musicToggle.classList.remove("muted");
+            }).catch(error => {
+                console.log("❌ 音乐播放失败:", error);
+                alert("音乐播放失败，请重试");
+            });
         } else {
+            // 暂停音乐
+            musicEl.pause();
             musicToggle.textContent = "🔇";
             musicToggle.classList.add("muted");
-            musicToggle.setAttribute("aria-label", "开启音乐");
-            musicToggle.setAttribute("title", "开启音乐");
+            console.log("⏸️ 音乐已暂停");
         }
-    }
-    // ================= 音乐逻辑结束 =================
+    });
+    
+    // 初始化图标
+    musicToggle.textContent = "🔇";
+    musicToggle.classList.add("muted");
+}
+// ================= 音乐逻辑结束 =================
 
     // ================= 页面切换逻辑 ================= 
     // 查看情书按钮
@@ -315,6 +288,7 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
+
 
 
 
