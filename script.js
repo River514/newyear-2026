@@ -315,11 +315,3 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
-
-
-
-
-
-
-
-
