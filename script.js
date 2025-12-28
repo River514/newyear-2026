@@ -86,7 +86,7 @@ function updateMusicIcon() {
 }
 // ================= 音乐逻辑结束 =================
     
- // ================= 页面切换逻辑 ================= 
+// ================= 页面切换逻辑（夸克浏览器优化版） ================= 
 // 查看情书按钮
 if (viewLetterBtn) {
     viewLetterBtn.addEventListener('click', () => {
@@ -105,29 +105,55 @@ if (viewWishesBtn) {
     });
 }
 
-// ✅ 从情书返回（修复背景视频播放）
+// ✅ 强制恢复视频播放的函数（夸克浏览器兼容）
+function forceResumeVideo() {
+    const bgVideo = document.getElementById("bg-video");
+    if (!bgVideo) return;
+    
+    // 方法1：直接播放
+    bgVideo.play().then(() => {
+        console.log("✅ 视频恢复播放成功");
+    }).catch(error => {
+        console.log("方法1失败，尝试方法2...", error);
+        
+        // 方法2：重置时间并播放
+        bgVideo.currentTime = 0;
+        bgVideo.play().catch(e => {
+            console.log("方法2失败，尝试方法3...", e);
+            
+            // 方法3：重新加载视频源
+            const videoSrc = bgVideo.src || bgVideo.querySelector('source')?.src;
+            if (videoSrc) {
+                bgVideo.load();
+                bgVideo.play().catch(err => {
+                    console.log("❌ 所有方法均失败", err);
+                });
+            }
+        });
+    });
+}
+
+// ✅ 从情书返回
 if (backFromLetterBtn && letterEl) {
     backFromLetterBtn.addEventListener('click', () => {
         letterEl.classList.add("hidden");
         
-        // ✅ 重新播放背景视频
-        const bgVideo = document.getElementById("bg-video");
-        if (bgVideo && bgVideo.paused) {
-            bgVideo.play().catch(e => console.log("视频恢复播放失败", e));
-        }
+        // 延迟一下确保页面切换完成
+        setTimeout(() => {
+            forceResumeVideo();
+        }, 100);
     });
 }
 
-// ✅ 从新年祝福返回（修复背景视频播放）
+// ✅ 从新年祝福返回
 if (backFromWishesBtn && wishesEl) {
     backFromWishesBtn.addEventListener('click', () => {
         wishesEl.classList.add("hidden");
         
-        // ✅ 重新播放背景视频
-        const bgVideo = document.getElementById("bg-video");
-        if (bgVideo && bgVideo.paused) {
-            bgVideo.play().catch(e => console.log("视频恢复播放失败", e));
-        }
+        // 延迟一下确保页面切换完成
+        setTimeout(() => {
+            forceResumeVideo();
+        }, 100);
     });
 }
 // ================= 页面切换逻辑结束 =================
@@ -315,3 +341,4 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
+
