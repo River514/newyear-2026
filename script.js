@@ -32,117 +32,93 @@ window.addEventListener("DOMContentLoaded", () => {
     const backFromLetterBtn = document.getElementById("back-from-letter");
     const backFromWishesBtn = document.getElementById("back-from-wishes");
 
-   // ================= 音乐逻辑 =================
-const musicEl = document.getElementById("bg-music");
-const musicToggle = document.getElementById("music-toggle");
+    // ================= 音乐逻辑 =================
+    const musicEl = document.getElementById("bg-music");
+    const musicToggle = document.getElementById("music-toggle");
 
-updateMusicIcon();
+    updateMusicIcon();
 
-const startMusic = () => {
-    if (!musicEl.paused) return;
+    const startMusic = () => {
+        if (!musicEl.paused) return;
 
-    musicEl.muted = false;
-    musicEl.volume = 0.8;
-    musicEl.play().then(() => {
-        updateMusicIcon();
-        document.removeEventListener('click', startMusic);
-        document.removeEventListener('touchstart', startMusic);
-    }).catch(error => {
-        console.log("浏览器拦截自动播放，等待用户交互...");
-    });
-};
-
-startMusic();
-
-document.addEventListener('click', startMusic);
-document.addEventListener('touchstart', startMusic);
-
-if (musicToggle && musicEl) {
-    musicToggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-
-        if (musicEl.paused) {
-            startMusic();
-        } else {
-            musicEl.pause();
+        musicEl.muted = false;
+        musicEl.volume = 0.8;
+        musicEl.play().then(() => {
             updateMusicIcon();
-        }
-    });
-}
+            document.removeEventListener('click', startMusic);
+            document.removeEventListener('touchstart', startMusic);
+        }).catch(error => {
+            console.log("浏览器拦截自动播放，等待用户交互...");
+        });
+    };
 
-function updateMusicIcon() {
-    if (!musicToggle || !musicEl) return;
-    if (!musicEl.paused) {
-        musicToggle.textContent = "🎵";
-        musicToggle.classList.remove("muted");
-        musicToggle.setAttribute("aria-label", "关闭音乐");
-        musicToggle.setAttribute("title", "关闭音乐");
-    } else {
-        musicToggle.textContent = "🔇";
-        musicToggle.classList.add("muted");
-        musicToggle.setAttribute("aria-label", "开启音乐");
-        musicToggle.setAttribute("title", "开启音乐");
+    startMusic();
+
+    document.addEventListener('click', startMusic);
+    document.addEventListener('touchstart', startMusic);
+
+    if (musicToggle && musicEl) {
+        musicToggle.addEventListener("click", (e) => {
+            e.stopPropagation();
+
+            if (musicEl.paused) {
+                startMusic();
+            } else {
+                musicEl.pause();
+                updateMusicIcon();
+            }
+        });
     }
-}
-// ================= 音乐逻辑结束 =================
-    
-// ================= 页面切换逻辑（极简版） ================= 
-// 查看情书按钮
-if (viewLetterBtn) {
-    viewLetterBtn.addEventListener('click', () => {
-        if (letterEl) {
-            letterEl.classList.remove("hidden");
+
+    function updateMusicIcon() {
+        if (!musicToggle || !musicEl) return;
+        if (!musicEl.paused) {
+            musicToggle.textContent = "🎵";
+            musicToggle.classList.remove("muted");
+            musicToggle.setAttribute("aria-label", "关闭音乐");
+            musicToggle.setAttribute("title", "关闭音乐");
+        } else {
+            musicToggle.textContent = "🔇";
+            musicToggle.classList.add("muted");
+            musicToggle.setAttribute("aria-label", "开启音乐");
+            musicToggle.setAttribute("title", "开启音乐");
         }
-    });
-}
+    }
+    // ================= 音乐逻辑结束 =================
 
-// 查看新年祝福按钮
-if (viewWishesBtn) {
-    viewWishesBtn.addEventListener('click', () => {
-        if (wishesEl) {
-            wishesEl.classList.remove("hidden");
-        }
-    });
-}
+    // ================= 页面切换逻辑 ================= 
+    // 查看情书按钮
+    if (viewLetterBtn) {
+        viewLetterBtn.addEventListener('click', () => {
+            if (letterEl) {
+                letterEl.classList.remove("hidden");
+            }
+        });
+    }
 
-// ✅ 从情书返回（不再控制视频）
-if (backFromLetterBtn && letterEl) {
-    backFromLetterBtn.addEventListener('click', () => {
-        letterEl.classList.add("hidden");
-    });
-}
+    // 查看新年祝福按钮
+    if (viewWishesBtn) {
+        viewWishesBtn.addEventListener('click', () => {
+            if (wishesEl) {
+                wishesEl.classList.remove("hidden");
+            }
+        });
+    }
 
-// ✅ 从新年祝福返回（不再控制视频）
-if (backFromWishesBtn && wishesEl) {
-    backFromWishesBtn.addEventListener('click', () => {
-        wishesEl.classList.add("hidden");
-    });
-}
-// ================= 页面切换逻辑结束 =================
-// ✅ 从情书返回
-if (backFromLetterBtn && letterEl) {
-    backFromLetterBtn.addEventListener('click', () => {
-        letterEl.classList.add("hidden");
-        
-        // 延迟一下确保页面切换完成
-        setTimeout(() => {
-            forceResumeVideo();
-        }, 100);
-    });
-}
+    // 从情书返回
+    if (backFromLetterBtn && letterEl) {
+        backFromLetterBtn.addEventListener('click', () => {
+            letterEl.classList.add("hidden");
+        });
+    }
 
-// ✅ 从新年祝福返回
-if (backFromWishesBtn && wishesEl) {
-    backFromWishesBtn.addEventListener('click', () => {
-        wishesEl.classList.add("hidden");
-        
-        // 延迟一下确保页面切换完成
-        setTimeout(() => {
-            forceResumeVideo();
-        }, 100);
-    });
-}
-// ================= 页面切换逻辑结束 =================
+    // 从新年祝福返回
+    if (backFromWishesBtn && wishesEl) {
+        backFromWishesBtn.addEventListener('click', () => {
+            wishesEl.classList.add("hidden");
+        });
+    }
+    // ================= 页面切换逻辑结束 =================
 
     // 倒计时逻辑
     if (!dEl || !hEl || !mEl || !sEl) {
@@ -150,8 +126,8 @@ if (backFromWishesBtn && wishesEl) {
         return;
     }
 
-    const target = new Date(2026, 0, 1, 0, 0, 0).getTime();
-    //const target = Date.now() + 5000; // 测试用：5秒后倒计时结束
+   // const target = new Date(2026, 0, 1, 0, 0, 0).getTime();
+    const target = Date.now() + 5000; // 测试用：5秒后倒计时结束
 
     const pad = (n) => String(n).padStart(2, "0");
 
@@ -327,6 +303,7 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
+
 
 
 
