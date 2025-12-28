@@ -1,5 +1,22 @@
-﻿window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", () => {
     console.log("跨年页面已启动");
+
+    // ✅ 新增：确保背景视频播放（移动端兼容）
+    const bgVideo = document.getElementById("bg-video");
+    if (bgVideo) {
+        bgVideo.muted = true; // 确保静音
+        bgVideo.play().catch(error => {
+            console.log("视频自动播放被阻止，等待用户交互", error);
+            // 监听用户首次交互后播放视频
+            const playVideoOnInteraction = () => {
+                bgVideo.play().catch(e => console.log("视频播放失败", e));
+                document.removeEventListener('click', playVideoOnInteraction);
+                document.removeEventListener('touchstart', playVideoOnInteraction);
+            };
+            document.addEventListener('click', playVideoOnInteraction);
+            document.addEventListener('touchstart', playVideoOnInteraction);
+        });
+    }
 
     // 倒计时元素
     const dEl = document.getElementById("d");
@@ -15,32 +32,32 @@
     const backFromLetterBtn = document.getElementById("back-from-letter");
     const backFromWishesBtn = document.getElementById("back-from-wishes");
 
-    // ================= 音乐逻辑 =================
+    // ================= 音乐逻辑（移动端优化版） =================
     const musicEl = document.getElementById("bg-music");
     const musicToggle = document.getElementById("music-toggle");
+    let musicStarted = false; // 标记音乐是否已尝试启动
 
     updateMusicIcon();
 
     const startMusic = () => {
-        if (!musicEl.paused) return;
+        if (!musicEl.paused || musicStarted) return;
 
+        musicStarted = true;
         musicEl.muted = false;
         musicEl.volume = 0.8;
+
         musicEl.play().then(() => {
+            console.log("✅ 音乐播放成功");
             updateMusicIcon();
-            document.removeEventListener('click', startMusic);
-            document.removeEventListener('touchstart', startMusic);
         }).catch(error => {
-            console.log("浏览器拦截自动播放，等待用户交互...");
+            console.log("❌ 音乐播放被阻止:", error);
+            musicStarted = false; // 重置标记，允许再次尝试
         });
     };
 
-    startMusic();
-
-    document.addEventListener('click', startMusic);
-    document.addEventListener('touchstart', startMusic);
-
+    // ✅ 添加明显的用户提示
     if (musicToggle && musicEl) {
+        // 点击音乐按钮启动
         musicToggle.addEventListener("click", (e) => {
             e.stopPropagation();
 
@@ -51,6 +68,18 @@
                 updateMusicIcon();
             }
         });
+
+        // 页面任意位置点击也尝试启动（仅一次）
+        const startOnFirstInteraction = () => {
+            if (!musicStarted) {
+                startMusic();
+            }
+            document.removeEventListener('click', startOnFirstInteraction);
+            document.removeEventListener('touchstart', startOnFirstInteraction);
+        };
+
+        document.addEventListener('click', startOnFirstInteraction, { once: true });
+        document.addEventListener('touchstart', startOnFirstInteraction, { once: true });
     }
 
     function updateMusicIcon() {
