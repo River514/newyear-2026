@@ -1,34 +1,33 @@
-/* ============= 视频背景样式（优化版） ============= */
+/* ============= 视频背景样式 ============= */
 .video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    z-index: -1; /* 保持在最底层，但始终可见 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	z-index: -1;
 }
 
-.video-background video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-}
+	.video-background video {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		transform: translate(-50%, -50%);
+		object-fit: cover;
+	}
 
 .video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    pointer-events: none; /* ✅ 确保不阻挡交互 */
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.3);
 }
 
 /* ============= 全局样式 ============= */
@@ -351,19 +350,19 @@ button {
 
 /* ============= 情书样式 ============= */
 #love-letter {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, rgba(200, 162, 200, 0.98) 0%, rgba(255, 182, 193, 0.98) 100%); /* ✅ 提高不透明度 */
-    z-index: 70;
-    backdrop-filter: blur(10px);
-    pointer-events: auto;
-    animation: fadeIn 2.5s ease forwards;
-    padding: 40px 20px;
-    overflow-y: auto;
+	position: fixed;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(135deg, rgba(200, 162, 200, 0.88) 0%, rgba(255, 182, 193, 0.88) 100%);
+	z-index: 70;
+	backdrop-filter: blur(10px);
+	pointer-events: auto;
+	animation: fadeIn 2.5s ease forwards;
+	padding: 40px 20px;
+	overflow-y: auto; /* ✅ 允许滚动，防止内容太长 */
 }
 
 /* ✅ 情书内容容器 */
@@ -491,17 +490,17 @@ button {
 
 /* ============= 新年祝福页面样式 ============= */
 #new-year-wishes {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.98) 0%, rgba(255, 107, 129, 0.98) 100%); /* ✅ 提高不透明度 */
-    z-index: 70;
-    backdrop-filter: blur(10px);
-    pointer-events: auto;
-    animation: fadeIn 2.5s ease forwards;
+	position: fixed;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(135deg, rgba(255, 215, 0, 0.9) 0%, rgba(255, 107, 129, 0.9) 100%);
+	z-index: 70;
+	backdrop-filter: blur(10px);
+	pointer-events: auto;
+	animation: fadeIn 2.5s ease forwards;
 }
 
 .wishes-content {
@@ -788,5 +787,3 @@ button {
 		letter-spacing: 3px;
 	}
 }
-
-
