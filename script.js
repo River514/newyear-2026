@@ -71,6 +71,7 @@ if (musicToggle && musicEl) {
 }
 // ================= 音乐逻辑结束 =================
 
+    
     // ================= 页面切换逻辑 ================= 
     // 查看情书按钮
     if (viewLetterBtn) {
@@ -288,6 +289,7 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
+
 
 
 
