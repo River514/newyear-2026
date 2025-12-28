@@ -150,8 +150,8 @@ if (backFromWishesBtn && wishesEl) {
         return;
     }
 
-   // const target = new Date(2026, 0, 1, 0, 0, 0).getTime();
-    const target = Date.now() + 5000; // 测试用：5秒后倒计时结束
+    const target = new Date(2026, 0, 1, 0, 0, 0).getTime();
+    //const target = Date.now() + 5000; // 测试用：5秒后倒计时结束
 
     const pad = (n) => String(n).padStart(2, "0");
 
@@ -327,5 +327,6 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
+
 
 
