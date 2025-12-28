@@ -86,7 +86,7 @@ function updateMusicIcon() {
 }
 // ================= 音乐逻辑结束 =================
     
-// ================= 页面切换逻辑（夸克浏览器优化版） ================= 
+// ================= 页面切换逻辑（极简版） ================= 
 // 查看情书按钮
 if (viewLetterBtn) {
     viewLetterBtn.addEventListener('click', () => {
@@ -105,34 +105,20 @@ if (viewWishesBtn) {
     });
 }
 
-// ✅ 强制恢复视频播放的函数（夸克浏览器兼容）
-function forceResumeVideo() {
-    const bgVideo = document.getElementById("bg-video");
-    if (!bgVideo) return;
-    
-    // 方法1：直接播放
-    bgVideo.play().then(() => {
-        console.log("✅ 视频恢复播放成功");
-    }).catch(error => {
-        console.log("方法1失败，尝试方法2...", error);
-        
-        // 方法2：重置时间并播放
-        bgVideo.currentTime = 0;
-        bgVideo.play().catch(e => {
-            console.log("方法2失败，尝试方法3...", e);
-            
-            // 方法3：重新加载视频源
-            const videoSrc = bgVideo.src || bgVideo.querySelector('source')?.src;
-            if (videoSrc) {
-                bgVideo.load();
-                bgVideo.play().catch(err => {
-                    console.log("❌ 所有方法均失败", err);
-                });
-            }
-        });
+// ✅ 从情书返回（不再控制视频）
+if (backFromLetterBtn && letterEl) {
+    backFromLetterBtn.addEventListener('click', () => {
+        letterEl.classList.add("hidden");
     });
 }
 
+// ✅ 从新年祝福返回（不再控制视频）
+if (backFromWishesBtn && wishesEl) {
+    backFromWishesBtn.addEventListener('click', () => {
+        wishesEl.classList.add("hidden");
+    });
+}
+// ================= 页面切换逻辑结束 =================
 // ✅ 从情书返回
 if (backFromLetterBtn && letterEl) {
     backFromLetterBtn.addEventListener('click', () => {
@@ -341,4 +327,5 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
+
 
