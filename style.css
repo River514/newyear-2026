@@ -767,6 +767,7 @@ button {
 		font-size: 17px; /* ✅ 和移动端段落相同 */
 		font-weight: 400; /* 或 500，取决于你选哪个方案 */
 		margin-bottom: 6px;
+		margin-top: 30px; /* ✅ 新增：给顶部留出空间，防止被遮挡 */
 		letter-spacing: 0px; /* 或 1px */
 	}
 
@@ -786,3 +787,4 @@ button {
 		letter-spacing: 3px;
 	}
 }
+
