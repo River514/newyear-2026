@@ -86,39 +86,51 @@ function updateMusicIcon() {
 }
 // ================= 音乐逻辑结束 =================
     
-    // ================= 页面切换逻辑 ================= 
-    // 查看情书按钮
-    if (viewLetterBtn) {
-        viewLetterBtn.addEventListener('click', () => {
-            if (letterEl) {
-                letterEl.classList.remove("hidden");
-            }
-        });
-    }
+ // ================= 页面切换逻辑 ================= 
+// 查看情书按钮
+if (viewLetterBtn) {
+    viewLetterBtn.addEventListener('click', () => {
+        if (letterEl) {
+            letterEl.classList.remove("hidden");
+        }
+    });
+}
 
-    // 查看新年祝福按钮
-    if (viewWishesBtn) {
-        viewWishesBtn.addEventListener('click', () => {
-            if (wishesEl) {
-                wishesEl.classList.remove("hidden");
-            }
-        });
-    }
+// 查看新年祝福按钮
+if (viewWishesBtn) {
+    viewWishesBtn.addEventListener('click', () => {
+        if (wishesEl) {
+            wishesEl.classList.remove("hidden");
+        }
+    });
+}
 
-    // 从情书返回
-    if (backFromLetterBtn && letterEl) {
-        backFromLetterBtn.addEventListener('click', () => {
-            letterEl.classList.add("hidden");
-        });
-    }
+// ✅ 从情书返回（修复背景视频播放）
+if (backFromLetterBtn && letterEl) {
+    backFromLetterBtn.addEventListener('click', () => {
+        letterEl.classList.add("hidden");
+        
+        // ✅ 重新播放背景视频
+        const bgVideo = document.getElementById("bg-video");
+        if (bgVideo && bgVideo.paused) {
+            bgVideo.play().catch(e => console.log("视频恢复播放失败", e));
+        }
+    });
+}
 
-    // 从新年祝福返回
-    if (backFromWishesBtn && wishesEl) {
-        backFromWishesBtn.addEventListener('click', () => {
-            wishesEl.classList.add("hidden");
-        });
-    }
-    // ================= 页面切换逻辑结束 =================
+// ✅ 从新年祝福返回（修复背景视频播放）
+if (backFromWishesBtn && wishesEl) {
+    backFromWishesBtn.addEventListener('click', () => {
+        wishesEl.classList.add("hidden");
+        
+        // ✅ 重新播放背景视频
+        const bgVideo = document.getElementById("bg-video");
+        if (bgVideo && bgVideo.paused) {
+            bgVideo.play().catch(e => console.log("视频恢复播放失败", e));
+        }
+    });
+}
+// ================= 页面切换逻辑结束 =================
 
     // 倒计时逻辑
     if (!dEl || !hEl || !mEl || !sEl) {
@@ -303,6 +315,7 @@ function initPhotoSlider() {
 
     setInterval(nextSlide, 2000);
 }
+
 
 
 
